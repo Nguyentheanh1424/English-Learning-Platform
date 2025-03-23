@@ -13,12 +13,8 @@
         "packagesPath": "/home/theanh/.nuget/packages/",
         "outputPath": "/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/obj/",
         "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "/home/theanh/.nuget/NuGet/NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0"
-        ],
+        "configFilePaths": ["/home/theanh/.nuget/NuGet/NuGet.Config"],
+        "originalTargetFrameworks": ["net8.0"],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -29,18 +25,28 @@
           }
         },
         "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
+          "warnAsError": ["NU1605"]
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.14, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.7.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.2.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
