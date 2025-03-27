@@ -7,6 +7,7 @@ namespace EnglishLearningAPI.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonIgnoreIfDefault]
         public string Id { get; set; } = string.Empty;
 
         [BsonElement("username")]

@@ -7,10 +7,14 @@
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/EnglishLearningAPI.pdb
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/BCrypt.Net-Next.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/DnsClient.dll
+/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.Bcl.Memory.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Microsoft.OpenApi.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/MongoDB.Bson.dll
@@ -20,6 +24,7 @@
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/bin/Debug/net8.0/ZstdSharp.dll
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/obj/Debug/net8.0/EnglishLearningAPI.csproj.AssemblyReference.cache
 /home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/obj/Debug/net8.0/EnglishLearningAPI.GeneratedMSBuildEditorConfig.editorconfig
