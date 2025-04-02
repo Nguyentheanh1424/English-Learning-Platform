@@ -1597,11 +1597,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/EnglishLearningAPI.csproj",
+      "projectUniqueName": "/home/theanh/project/English-Learning-Platform/backend/EnglishLearningAPI/EnglishLearningAPI.csproj",
       "projectName": "EnglishLearningAPI",
-      "projectPath": "/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/EnglishLearningAPI.csproj",
+      "projectPath": "/home/theanh/project/English-Learning-Platform/backend/EnglishLearningAPI/EnglishLearningAPI.csproj",
       "packagesPath": "/home/theanh/.nuget/packages/",
-      "outputPath": "/home/theanh/project/english-learning-platform/backend/EnglishLearningAPI/obj/",
+      "outputPath": "/home/theanh/project/English-Learning-Platform/backend/EnglishLearningAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/theanh/.nuget/NuGet/NuGet.Config"

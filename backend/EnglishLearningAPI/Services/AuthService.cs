@@ -1,29 +1,24 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
+using EnglishLearningAPI.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using BCrypt.Net;
-using EnglishLearningAPI.Models;
-using System.Text.RegularExpressions;
+using MongoDB.Driver;
+using BC = BCrypt.Net.BCrypt;
 
 namespace EnglishLearningAPI.Services
 {
     public class AuthService
     {
         private readonly UserService _userService;
-        private readonly string _secretKey;
-        private readonly string _issuer;
-        private readonly string _audience;
-        private readonly int _expiryMinutes;
+        private readonly JwtSettings _jwtSettings;
 
         public AuthService(UserService userService, IOptions<JwtSettings> jwtSettings)
         {
             _userService = userService;
-            _secretKey = jwtSettings.Value.SecretKey ?? throw new ArgumentNullException(nameof(jwtSettings.Value.SecretKey));
-            _issuer = jwtSettings.Value.Issuer ?? throw new ArgumentNullException(nameof(jwtSettings.Value.Issuer));
-            _audience = jwtSettings.Value.Audience ?? throw new ArgumentNullException(nameof(jwtSettings.Value.Audience));
-            _expiryMinutes = jwtSettings.Value.ExpiryMinutes > 0 ? jwtSettings.Value.ExpiryMinutes : 60;
+            _jwtSettings = jwtSettings.Value ?? throw new ArgumentNullException(nameof(jwtSettings.Value));
         }
 
         // 🔹 Đăng ký user mới (Hash mật khẩu trước khi lưu)
@@ -45,7 +40,7 @@ namespace EnglishLearningAPI.Services
             if (existingUser != null)
                 return false; // User đã tồn tại
 
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
+            user.PasswordHash = BC.HashPassword(user.PasswordHash);
             await _userService.CreateUserAsync(user);
             return true;
         }
@@ -53,21 +48,36 @@ namespace EnglishLearningAPI.Services
         // 🔹 Xác thực user và tạo JWT Token
         public async Task<string?> Authenticate(string email, string password)
         {
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-                return null;
+            email = email.ToLower().Trim();
+            password = password.Trim();
 
-            var user = await _userService.GetUserByEmailAsync(email.ToLower());
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            var user = await _userService.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                Console.WriteLine($"❌ Không tìm thấy user với email: {email}");
                 return null;
+            }
 
+            Console.WriteLine($"🔹 Mật khẩu nhập vào: '{password}' (Length: {password.Length})");
+            Console.WriteLine($"🔹 Mật khẩu hash trong DB: '{user.PasswordHash}' (Length: {user.PasswordHash.Length})");
+
+            if (!BC.Verify(password, user.PasswordHash))
+            {
+                Console.WriteLine("❌ Sai mật khẩu!");
+                return null;
+            }
+
+            Console.WriteLine($"✅ Xác thực thành công cho user {user.Username}");
             return GenerateJwtToken(user);
         }
+
 
         // 🔹 Tạo JWT Token
         private string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_secretKey);
+            var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
@@ -79,9 +89,9 @@ namespace EnglishLearningAPI.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Issuer = _issuer,
-                Audience = _audience,
-                Expires = DateTime.UtcNow.AddMinutes(_expiryMinutes),
+                Issuer = _jwtSettings.Issuer,
+                Audience = _jwtSettings.Audience,
+                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

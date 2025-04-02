@@ -36,7 +36,7 @@ namespace EnglishLearningAPI.Services
             return await _users.Find(user => user.Id == id).FirstOrDefaultAsync();
         }
 
-        // 🔹 Thêm người dùng với Hash mật khẩu
+        // Thêm người dùng với Hash mật khẩu
         public async Task<bool> CreateUserAsync(User user)
         {
             // Kiểm tra xem email đã tồn tại chưa
@@ -50,7 +50,7 @@ namespace EnglishLearningAPI.Services
             return true;
         }
 
-        // 🔹 Cập nhật người dùng (không thay đổi mật khẩu nếu không cần)
+        // Cập nhật người dùng (không thay đổi mật khẩu nếu không cần)
         public async Task<bool> UpdateUserAsync(string id, User updatedUser)
         {
             var existingUser = await GetUserByIdAsync(id);
@@ -80,7 +80,7 @@ namespace EnglishLearningAPI.Services
             return result.IsAcknowledged && result.DeletedCount > 0;
         }
 
-        // 🔹 Kiểm tra mật khẩu khi đăng nhập
+        // Kiểm tra mật khẩu khi đăng nhập
         public async Task<User?> AuthenticateUserAsync(string email, string password)
         {
             var user = await GetUserByEmailAsync(email);

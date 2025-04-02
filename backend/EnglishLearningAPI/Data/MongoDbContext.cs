@@ -16,5 +16,7 @@ namespace EnglishLearningAPI.Data
         }
 
         public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
+        public IMongoCollection<Vocabulary> Vocabulary => _database.GetCollection<Vocabulary>("Vocabulary");
+        public IMongoCollection<Grammar> Grammar => _database.GetCollection<Grammar>("Grammar");
     }
 }

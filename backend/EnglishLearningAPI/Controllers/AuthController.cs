@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 
-using BCrypt.Net;   
-
 using EnglishLearningAPI.Models;
 using EnglishLearningAPI.Services;
 
@@ -13,39 +11,45 @@ namespace EnglishLearningAPI.Controllers
     {
         private readonly AuthService _authService;
         private readonly UserService _userService;
-    
-        // POST: api/auth/login
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest login)
+
+        public AuthController(AuthService authService, UserService userService)
         {
-            var token = await _authService.Authenticate(login.Email, login.Password);
-            if (token == null)
-                return Unauthorized(new { Message = "Invalid credentials" });
-            return Ok(new { token });
+            _authService = authService;
+            _userService = userService;
         }
 
-        // POST: api/auth/register
+        // API Đăng ký
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]  User user)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            if (await _userService.GetUserByEmailAsync(user.Email) != null)
-                return BadRequest(new { Message = "Email already exists" });
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
-            await _userService.CreateUserAsync(user);
-            return Ok(new { Message = "User registered successfully" });
+            if (await _userService.GetUserByEmailAsync(request.Email) != null)
+                return BadRequest(new { message = "Email đã tồn tại!" });
+
+            var newUser = new User
+            {
+                Username = request.Username,
+                Email = request.Email.ToLower().Trim(),
+                PasswordHash = request.Password,
+                Role = "Student",
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow
+            };
+
+
+            await _userService.CreateUserAsync(newUser);
+            return Ok(new { message = "Đăng ký thành công!" });
         }
-    }
 
-    public class LoginRequest
-    {
-        public required string Email { get; set; }
-        public required string Password { get; set; }
-    }
 
-    public class RegisterRequest
-    {
-        public required string Username { get; set; }
-        public required string Password { get; set; }
-        public required string Email { get; set; }
+        // API Đăng nhập
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var token = await _authService.Authenticate(request.Email, request.Password);
+            if (token == null)
+                return Unauthorized(new { message = "Sai email hoặc mật khẩu!" });
+
+            return Ok(new { Token = token });
+        }
     }
 }
